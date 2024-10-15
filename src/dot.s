@@ -19,26 +19,43 @@
 # =======================================================
 dot:
 
-    # Prologue
+    bge zero, a2, error75
+    bge zero, a3, error76
+    bge zero, a4, error76
+    
 
+    # Prologue
+    
+    mv t0, zero
+    mv t1, zero
+    slli a3, a3, 2
+    slli a4, a4, 2
 
 loop_start:
-
-
-
-
-
-
-
-
-
-
-
+    beq t0, a2, loop_end
+    
+    lw t2, 0(a0)
+    lw t3, 0(a1)
+    mul t3, t2, t3
+    add t1, t1, t3
+    
+    addi t0, t0, 1
+    add a0, a0, a3
+    add a1, a1, a4
+    j loop_start
 
 loop_end:
-
+    mv a0, t1
 
     # Epilogue
 
     
     ret
+
+error75:
+    li a1, 75
+    j exit2
+
+error76:
+    li a1, 76
+    j exit2
